@@ -69,14 +69,14 @@ def foi_derrotado(matriz):
                 return False
     return True
 
-sorteio = random.choice(list(PAISES.keys()))
+pais_computador = random.choice(list(PAISES.keys()))
 print(" =====================================")
 print("|                                     |")
 print("| Bem-vindo ao INSPER - Batalha Naval |")
 print("|                                     |")
 print(" =======   xxxxxxxxxxxxxxxxx   ======= \n")
 print('Iniciando o Jogo!')
-print(f'Computador está alocando os navios de guerra do país {sorteio}...')
+print(f'Computador está alocando os navios de guerra do país {pais_computador}...')
 print('Computador já está em posição de batalha!')
 
 soma = 1
@@ -85,3 +85,11 @@ for k,v in PAISES.items():
     for k2,v2 in v.items():
         print(f'    {v2} {k2}')
     soma += 1
+
+while True:
+    input_jogador = input('Qual o número da nação da sua frota? ')
+    if input_jogador not in ['1','2','3','4','5']:
+        print('Opção inválida')
+    else:
+        pais_jogador = input_jogador
+        break
