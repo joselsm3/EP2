@@ -1,4 +1,5 @@
 import random
+from constantes import CONFIGURACAO, PAISES, ALFABETO, CORES
 
 def cria_mapa(tamanho):
     lista = []
@@ -67,3 +68,20 @@ def foi_derrotado(matriz):
             if c == 'N':
                 return False
     return True
+
+sorteio = random.choice(list(PAISES.keys()))
+print(" =====================================")
+print("|                                     |")
+print("| Bem-vindo ao INSPER - Batalha Naval |")
+print("|                                     |")
+print(" =======   xxxxxxxxxxxxxxxxx   ======= \n")
+print('Iniciando o Jogo!')
+print(f'Computador está alocando os navios de guerra do país {sorteio}...')
+print('Computador já está em posição de batalha!')
+
+soma = 1
+for k,v in PAISES.items():
+    print(f'{soma}: {k}')
+    for k2,v2 in v.items():
+        print(f'    {v2} {k2}')
+    soma += 1
