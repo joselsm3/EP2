@@ -93,3 +93,4 @@ while True:
     else:
         pais_jogador = input_jogador
         break
+    
