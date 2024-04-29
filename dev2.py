@@ -82,13 +82,39 @@ for k , v in PAISES.items():
         print(f'Você escolheu a nação {k}')
         print("Agora é sua vez de alocar seus navios de guerra!")
         break
-def mostrarMapa(mat1,mat2):
-    print(' A B C D E F G H I J     A B C D E F G H I J ')
+mapa1 = [['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' ']]
+
+mapa2 = [['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' '],
+         ['N','N','N','N','N',' ',' ',' ',' ',' ']]
+
+def mostrarMapa(mat1, mat2):
+    print('   A  B  C  D  E  F  G  H  I  J        A  B  C  D  E  F  G  H  I  J')
     for linha in range(10):
-        print(f'{linha+1:2d}',end = '')
+        print(f'{linha+1:2d}', end='')
         for coluna in range(10):
-            print(f' {mat1[linha][coluna]}', end = '')
+            print(f' {mat1[linha][coluna]} ', end='')
+        print(f'    {linha+1:2d}', end='')
+        for coluna in range(10):
+            print(f' {mat2[linha][coluna]} ', end='')
         print()
+mostrarMapa(mapa1, mapa2)
 
 
 
