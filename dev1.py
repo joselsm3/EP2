@@ -94,6 +94,7 @@ def mostrarMapa(mat1, mat2):
         for coluna in range(10):
             print(f' {mat2[linha][coluna]} ', end='')
         print()
+    print('   A  B  C  D  E  F  G  H  I  J        A  B  C  D  E  F  G  H  I  J')
 
 mostrarMapa(mapa_computador, mapa_jogador)
 
