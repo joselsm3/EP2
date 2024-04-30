@@ -62,3 +62,9 @@ CORES = {
     'cyan': '\u001b[36m',
     'white': '\u001b[37m'
 }
+
+DICIONARIO_CORES = {
+    "A": '\u001b[34m▓▓▓\u001b[0m',
+    "X": '\u001b[31m▓▓▓\u001b[0m',
+    "V": '\u001b[32m▓▓▓\u001b[0m'
+}

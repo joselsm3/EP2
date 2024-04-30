@@ -1,29 +1,12 @@
 import random
-from constantes import CONFIGURACAO, PAISES, ALFABETO, CORES
+from time import sleep
+from constantes import CONFIGURACAO, PAISES, ALFABETO, DICIONARIO_CORES
 
 def cria_mapa(tamanho):
     lista = []
     for i in range(tamanho):
         lista.append([' ']*tamanho)
     return lista
-
-def posicao_suporta(matriz, blocos, linha, coluna, orient):
-    if linha < 0 or coluna < 0 or linha >= len(matriz) or coluna >= len(matriz):
-        return False
-    
-    if orient == 'v':
-        if linha + blocos > len(matriz):
-            return False
-        for i in range(linha, linha + blocos):
-            if matriz[i][coluna] != ' ':
-                return False
-    elif orient == 'h':
-        if coluna + blocos > len(matriz):
-            return False
-        for j in range(coluna, coluna + blocos):
-            if matriz[linha][j] != ' ':
-                return False
-    return True
 
 def posicao_suporta(matriz, blocos, linha, coluna, orient):
     if linha < 0 or coluna < 0 or linha >= len(matriz) or coluna >= len(matriz):
@@ -59,15 +42,6 @@ def aloca_navios(mapa, blocos):
                     for i in range(b):
                         mapa[linha+i][coluna] = 'N'
             break
-    print(mapa)
-    return mapa
-
-def foi_derrotado(matriz):
-    for l in matriz:
-        for c in l:
-            if c == 'N':
-                return False
-    return True
 
 pais_computador = random.choice(list(PAISES.keys()))
 print(" =====================================")
@@ -87,10 +61,126 @@ for k,v in PAISES.items():
     soma += 1
 
 while True:
-    input_jogador = input('Qual o número da nação da sua frota? ')
-    if input_jogador not in ['1','2','3','4','5']:
+    input_jogador = int(input('Qual o número da nação da sua frota? '))
+    if input_jogador not in [1,2,3,4,5]:
         print('Opção inválida')
     else:
         pais_jogador = input_jogador
         break
-    
+
+i = 0
+for k , v in PAISES.items():
+    i+=1
+    if i == pais_jogador:
+        pais_jogador_nome = k
+        print(f'Você escolheu a nação {pais_jogador_nome}')
+        print("Agora é sua vez de alocar seus navios de guerra!")
+        break
+
+mapa_computador = cria_mapa(10)
+mapa_jogador = cria_mapa(10)
+def mostrarMapa(mat1, mat2):
+    for i in range(len(mat2)): 
+        for l in range(len(mat2[i])): 
+            if mat2[i][l] == "N": 
+                cor = "V"
+                mat2[i][l] = DICIONARIO_CORES[cor]
+    print('   A  B  C  D  E  F  G  H  I  J        A  B  C  D  E  F  G  H  I  J')
+    for linha in range(10):
+        print(f'{linha+1:2d}', end='')
+        for coluna in range(10):
+            print(f' {mat1[linha][coluna]} ', end='')
+        print(f'    {linha+1:2d}', end='')
+        for coluna in range(10):
+            print(f' {mat2[linha][coluna]} ', end='')
+        print()
+
+mostrarMapa(mapa_computador, mapa_jogador)
+
+def aloca_navios_jogador(mapa, blocos,linha,coluna,orientacao):      
+    if orientacao == 'h':
+        for bloco in range(blocos):
+            mapa[linha][bloco + coluna] = 'N'
+    else:
+        for bloco in range(blocos):
+            mapa[linha + bloco][coluna] = 'N'
+    return mapa
+
+coords={'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7, 'i':8, 'j':9}
+def converte_coordenada(coordenada):
+    letra = coordenada[0].lower()
+    if len(coordenada) ==2: 
+        coluna = int(coordenada[1])-1
+    elif len(coordenada) == 3: 
+        coluna = int(coordenada[1]+coordenada[2])-1
+    for k,v in coords.items(): 
+        if letra == k: 
+            linha = v
+    coordenada2 = [linha,coluna]
+    return coordenada2
+
+def valida_coordenada(letra, coluna):
+    if letra.upper() in ALFABETO and int(coluna) in range(1,11):
+        return True
+    return False 
+
+def converte_coordenada(l, c):
+    letra = l.lower()
+    coluna = int(c)-1
+    for k,v in coords.items(): 
+        if letra == k: 
+            linha = v
+    coordenada = [linha,coluna]
+    return coordenada
+
+def posicao_suporta_usuario(mapa, blocos,linha,coluna,orientacao):
+    if orientacao=='h':
+        if coluna+blocos>len(mapa[0]):
+            return False
+        for i in range(blocos):
+            if mapa[linha][i+coluna]=='\u001b[32m▓▓▓\u001b[0m':
+                return False
+        return True
+    elif orientacao=='v':
+        if linha+blocos>len(mapa):
+            return False
+        for i in range(blocos):
+            if mapa[linha+i][coluna]=='\u001b[32m▓▓▓\u001b[0m':
+                return False
+        return True
+
+navios_usuario=[]
+for k,v in PAISES[pais_jogador_nome].items():
+    for k2 in range(v):
+        navios_usuario.append(k)
+
+navios_usuario_2=[]
+for i in navios_usuario:
+    navios_usuario_2.append(i)
+print(navios_usuario)
+del navios_usuario_2[0]
+
+for i in navios_usuario:
+    while True:
+        print(f'alocar: {i} {CONFIGURACAO[i]} blocos')
+        sleep(1)
+        if navios_usuario_2!=[]:
+            print(f'próximos: {navios_usuario_2}')
+        letra = input('Informe a letra:')
+        coluna = input('Informe a coluna:')
+        direcao = input('Informe a orientação [v|h]').lower()
+   
+        if direcao in 'vh':
+            if valida_coordenada(letra, coluna):
+                if posicao_suporta_usuario(mapa_jogador, CONFIGURACAO[i], int(coluna)-1, coords[letra], direcao):
+                    coordenada = converte_coordenada(letra, coluna)
+                    mapa_jogador=aloca_navios_jogador(mapa_jogador, CONFIGURACAO[i], coordenada[1], coordenada[0], direcao)
+                    mostrarMapa(mapa_computador, mapa_jogador)
+                    if navios_usuario_2!=[]:
+                        del navios_usuario_2[0]
+                    break
+                else:   print('Opção inválida')
+            else:   print('Opção inválida')
+        else:   print('Opção inválida')
+
+print("Iniciando Batalha naval!")
