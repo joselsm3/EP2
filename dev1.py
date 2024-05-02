@@ -2,6 +2,7 @@ import random
 from time import sleep
 from constantes import CONFIGURACAO, PAISES, ALFABETO, DICIONARIO_CORES
 letras=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+numeros=[1,2,3,4,5,6,7,8,9,10]
 d={'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7, 'i':8, 'j':9}
 
 def cria_mapa(tamanho):
@@ -63,11 +64,13 @@ for k,v in PAISES.items():
     soma += 1
 
 while True:
-    input_jogador = int(input('Qual o número da nação da sua frota? '))
-    if input_jogador not in [1,2,3,4,5]:
+    input_jogador = input('Qual o número da nação da sua frota? ')
+    if not input_jogador.isdigit():
+        print('Opção inválida')
+    elif input_jogador.isdigit() and int(input_jogador) not in [1,2,3,4,5]:
         print('Opção inválida')
     else:
-        pais_jogador = input_jogador
+        pais_jogador = int(input_jogador)
         break
 
 i = 0
@@ -173,7 +176,7 @@ for i in navios_usuario:
         coluna = input('Informe a coluna:')
         direcao = input('Informe a orientação [v|h]').lower()
    
-        if direcao in 'vh':
+        if letra in letras and int(coluna) in numeros and direcao in 'vh':
             if valida_coordenada(letra, coluna):
                 if posicao_suporta_usuario(mapa_jogador, CONFIGURACAO[i], int(coluna)-1, coords[letra], direcao):
                     coordenada = converte_coordenada(letra, coluna)
@@ -223,11 +226,24 @@ def posiciona_frotas(mapa):
     return mapa
 
 mapa_computador_2 = posiciona_frotas(mapa_computador)
+
+lista_posicoes_atacadas = []
 while True:
     mostrarMapa(mapa_computador_2, mapa_jogador)
     print('Coordenadas do seu disparo')
-    letra = input('Letra: ').lower()
-    coluna = input('Coluna: ')
+    
+    while True:
+        letra = input('Letra: ').lower()
+        coluna = input('Coluna: ')
+        coord = letra.upper()+coluna
+        if letra in letras and int(coluna) in numeros and coord not in lista_posicoes_atacadas:
+            lista_posicoes_atacadas.append(coord)
+            break
+        elif coord in lista_posicoes_atacadas:
+            print(f'A posição {coord} já foi atacada!')
+        else:
+            print('Opção inválida!')
+
     if mapa_computador_2[int(coluna) - 1][coords[letra]]== '\u001b[32m▓▓▓\u001b[0m':
         resultado = 'BOOOOOOOMMMMMM!!!!!'
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[31m▓▓▓\u001b[0m'
@@ -250,5 +266,6 @@ while True:
         break
     if comp_perde(mapa_computador):
         print('Você venceu!')
+        print('Temos um novo xerife nos mares!')
         mostrarMapa(mapa_computador_2, mapa_jogador)
         break
