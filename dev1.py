@@ -8,7 +8,7 @@ d={'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7, 'i':8, 'j':9}
 def cria_mapa(tamanho):
     lista = []
     for i in range(tamanho):
-        lista.append([' ']*tamanho)
+        lista.append(['▓▓▓']*tamanho)
     return lista
 
 def posicao_suporta(matriz, blocos, linha, coluna, orient):
@@ -90,16 +90,16 @@ def mostrarMapa(mat1, mat2):
             if mat2[i][l] == "N": 
                 cor = "V"
                 mat2[i][l] = DICIONARIO_CORES[cor]
-    print('   A   B   C   D   E   F   G   H   I   J        A   B   C   D   E   F   G   H   I   J')
+    print('    A   B   C   D   E   F   G   H   I   J         A   B   C   D   E   F   G   H   I   J')
     for linha in range(10):
         print(f'{linha+1:2d}', end='')
         for coluna in range(10):
-            print(f' {mat1[linha][coluna]} ', end='')
+            print(f' {mat1[linha][coluna]:}', end='')
         print(f'            {linha+1:2d}', end='')
         for coluna in range(10):
-            print(f' {mat2[linha][coluna]} ', end='')
+            print(f' {mat2[linha][coluna]:^3}', end='')  # Utiliza alinhamento centralizado para manter as células alinhadas
         print()
-    print('   A   B   C   D   E   F   G   H   I   J        A   B   C   D   E   F   G   H   I   J')
+    print('   A   B   C   D   E   F   G   H   I   J              A   B   C   D   E   F   G   H   I   J')
 
 mostrarMapa(mapa_computador, mapa_jogador)
 
@@ -253,12 +253,12 @@ while True:
     else:
         resultado = 'Água!'
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
-        lista[int(coluna) - 1][coords[letra]]= '\u001b[3m▓▓▓\u001b[0m'
+        lista[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
 
     while True:
         letra_comp = random.choice(letras)
-        coluna_comp = random.randint(0,10)
-        coord = letra_comp.upper()+coluna_comp
+        coluna_comp = random.choice(numeros)
+        coord = letra_comp.upper()+str(coluna_comp)
         if coord not in lista_posicoes_atacadas_comp:
             lista_posicoes_atacadas.append(coord)
             break
