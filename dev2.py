@@ -19,13 +19,13 @@ def posicao_suporta(matriz, blocos, linha, coluna, orient):
         if linha + blocos > len(matriz):
             return False
         for i in range(linha, linha + blocos):
-            if matriz[i][coluna] != ' ':
+            if matriz[i][coluna] != '▓▓▓':
                 return False
     elif orient == 'h':
         if coluna + blocos > len(matriz):
             return False
         for j in range(coluna, coluna + blocos):
-            if matriz[linha][j] != ' ':
+            if matriz[linha][j] != '▓▓▓':
                 return False
     return True
 
@@ -90,7 +90,7 @@ def mostrarMapa(mat1, mat2):
             if mat2[i][l] == "N": 
                 cor = "V"
                 mat2[i][l] = DICIONARIO_CORES[cor]
-    print('    A   B   C   D   E   F   G   H   I   J                A   B   C   D   E   F   G   H   I   J')
+    print('    A   B   C   D   E   F   G   H   I   J                 A   B   C   D   E   F   G   H   I   J')
     for linha in range(10):
         print(f'{linha+1:2d}', end='')
         for coluna in range(10):
@@ -234,17 +234,8 @@ while True:
     mostrarMapa(lista, mapa_jogador)
     print('Coordenadas do seu disparo')
     
-    while True:
-        letra = input('Letra: ').lower()
-        coluna = input('Coluna: ')
-        coord = letra.upper()+coluna
-        if letra in letras and int(coluna) in numeros and coord not in lista_posicoes_atacadas:
-            lista_posicoes_atacadas.append(coord)
-            break
-        elif coord in lista_posicoes_atacadas:
-            print(f'A posição {coord} já foi atacada!')
-        else:
-            print('Opção inválida!')
+    letra = input('Letra: ').lower()
+    coluna = input('Coluna: ')
 
     if mapa_computador_2[int(coluna) - 1][coords[letra]]== '\u001b[32m▓▓▓\u001b[0m':
         resultado = 'BOOOOOOOMMMMMM!!!!!'
@@ -255,13 +246,8 @@ while True:
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
         lista[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
 
-    while True:
-        letra_comp = random.choice(letras)
-        coluna_comp = random.choice(numeros)
-        coord = letra_comp.upper()+str(coluna_comp)
-        if coord not in lista_posicoes_atacadas_comp:
-            lista_posicoes_atacadas.append(coord)
-            break
+    letra_comp = random.choice(letras)
+    coluna_comp = random.choice(numeros)
 
     if mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]== '\u001b[32m▓▓▓\u001b[0m':
         mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[31m▓▓▓\u001b[0m'
