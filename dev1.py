@@ -1,9 +1,6 @@
 import random
 from time import sleep
 from constantes import CONFIGURACAO, PAISES, ALFABETO, DICIONARIO_CORES
-lista_denumeros2=['1','2','3','4','5','6','7','8','9','10']
-numletra={0:'A', 1:'B', 2:'C', 3:'D', 4:'E', 5:'F', 6:'G', 7:'H', 8:'I', 9:'J'}
-lista_denumeros=['1','2','3','4','5']
 letras=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 d={'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7, 'i':8, 'j':9}
 
@@ -237,4 +234,12 @@ while True:
     else:
         resultado = 'Água!'
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
+    
+    letra_comp = random.choice(letras)
+    coluna_comp = random.randint(0,10)
+    if mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]== '\u001b[32m▓▓▓\u001b[0m':
+        mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[31m▓▓▓\u001b[0m'
+    else:
+        mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[34m▓▓▓\u001b[0m'
+        
     print(f'Jogador   ----->>>>> {letra.upper()}{coluna}       {resultado}')
