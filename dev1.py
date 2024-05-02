@@ -8,7 +8,7 @@ d={'a':0, 'b':1, 'c':2, 'd':3, 'e':4, 'f':5, 'g':6, 'h':7, 'i':8, 'j':9}
 def cria_mapa(tamanho):
     lista = []
     for i in range(tamanho):
-        lista.append(['▓▓▓']*tamanho)
+        lista.append(['   ']*tamanho)
     return lista
 
 def posicao_suporta(matriz, blocos, linha, coluna, orient):
@@ -19,13 +19,13 @@ def posicao_suporta(matriz, blocos, linha, coluna, orient):
         if linha + blocos > len(matriz):
             return False
         for i in range(linha, linha + blocos):
-            if matriz[i][coluna] != '▓▓▓':
+            if matriz[i][coluna] != '   ':
                 return False
     elif orient == 'h':
         if coluna + blocos > len(matriz):
             return False
         for j in range(coluna, coluna + blocos):
-            if matriz[linha][j] != '▓▓▓':
+            if matriz[linha][j] != '   ':
                 return False
     return True
 
