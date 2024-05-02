@@ -176,7 +176,7 @@ for i in navios_usuario:
         coluna = input('Informe a coluna:')
         direcao = input('Informe a orientação [v|h]').lower()
    
-        if letra in letras and int(coluna) in numeros and direcao in 'vh':
+        if letra in letras and coluna.isdigit() and int(coluna) in numeros and direcao in 'vh':
             if valida_coordenada(letra, coluna):
                 if posicao_suporta_usuario(mapa_jogador, CONFIGURACAO[i], int(coluna)-1, coords[letra], direcao):
                     coordenada = converte_coordenada(letra, coluna)
@@ -213,15 +213,16 @@ def posiciona_frotas(mapa):
             linha = random.randint(0, len(mapa) - 1)
             coluna = random.randint(0, len(mapa[0]) - 1)
             orientacao = random.choice(['h', 'v'])
-            
-            if posicao_suporta(mapa, blocos, linha, coluna, orientacao):
-                if orientacao == 'h':
-                    for i in range(blocos):
-                        mapa[linha][coluna + i] = '\u001b[32m▓▓▓\u001b[0m'
-                else:
-                    for i in range(blocos):
-                        mapa[linha + i][coluna] = '\u001b[32m▓▓▓\u001b[0m'
-                break
+
+            if letra in letras and int(coluna) in numeros and direcao in 'vh':
+                if posicao_suporta(mapa, blocos, linha, coluna, orientacao):
+                    if orientacao == 'h':
+                        for i in range(blocos):
+                            mapa[linha][coluna + i] = '\u001b[32m▓▓▓\u001b[0m'
+                    else:
+                        for i in range(blocos):
+                            mapa[linha + i][coluna] = '\u001b[32m▓▓▓\u001b[0m'
+                    break
 
     return mapa
 
