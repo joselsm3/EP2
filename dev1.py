@@ -226,10 +226,12 @@ def posiciona_frotas(mapa):
     return mapa
 
 mapa_computador_2 = posiciona_frotas(mapa_computador)
-
+lista = cria_mapa(10)
 lista_posicoes_atacadas = []
+lista_posicoes_atacadas_comp = []
+
 while True:
-    mostrarMapa(mapa_computador_2, mapa_jogador)
+    mostrarMapa(lista, mapa_jogador)
     print('Coordenadas do seu disparo')
     
     while True:
@@ -247,12 +249,20 @@ while True:
     if mapa_computador_2[int(coluna) - 1][coords[letra]]== '\u001b[32m▓▓▓\u001b[0m':
         resultado = 'BOOOOOOOMMMMMM!!!!!'
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[31m▓▓▓\u001b[0m'
+        lista[int(coluna) - 1][coords[letra]]= '\u001b[31m▓▓▓\u001b[0m'
     else:
         resultado = 'Água!'
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
+        lista[int(coluna) - 1][coords[letra]]= '\u001b[3m▓▓▓\u001b[0m'
 
-    letra_comp = random.choice(letras)
-    coluna_comp = random.randint(0,10)
+    while True:
+        letra_comp = random.choice(letras)
+        coluna_comp = random.randint(0,10)
+        coord = letra_comp.upper()+coluna_comp
+        if coord not in lista_posicoes_atacadas_comp:
+            lista_posicoes_atacadas.append(coord)
+            break
+
     if mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]== '\u001b[32m▓▓▓\u001b[0m':
         mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[31m▓▓▓\u001b[0m'
     else:
@@ -262,10 +272,10 @@ while True:
 
     if jogador_perde(mapa_jogador):
         print('Você perdeu!')
-        mostrarMapa(mapa_computador_2, mapa_jogador)
+        mostrarMapa(lista, mapa_jogador)
         break
-    if comp_perde(mapa_computador):
+    if comp_perde(mapa_computador_2):
         print('Você venceu!')
         print('Temos um novo xerife nos mares!')
-        mostrarMapa(mapa_computador_2, mapa_jogador)
+        mostrarMapa(lista, mapa_jogador)
         break
