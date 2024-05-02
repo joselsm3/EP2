@@ -250,7 +250,7 @@ while True:
     else:
         resultado = 'Água!'
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
-    
+
     letra_comp = random.choice(letras)
     coluna_comp = random.randint(0,10)
     if mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]== '\u001b[32m▓▓▓\u001b[0m':
