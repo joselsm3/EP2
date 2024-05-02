@@ -234,8 +234,15 @@ while True:
     mostrarMapa(lista, mapa_jogador)
     print('Coordenadas do seu disparo')
     
-    letra = input('Letra: ').lower()
-    coluna = input('Coluna: ')
+    while True:
+        letra = input('Letra: ').lower()
+        coluna = input('Coluna: ')
+        coord_jog=letra+str(coluna)
+        if coord_jog in lista_posicoes_atacadas:
+            print('Opção inválida!')
+        else:
+            lista_posicoes_atacadas.append(coord_jog)
+            break
 
     if mapa_computador_2[int(coluna) - 1][coords[letra]]== '\u001b[32m▓▓▓\u001b[0m':
         resultado = 'BOOOOOOOMMMMMM!!!!!'
@@ -246,8 +253,13 @@ while True:
         mapa_computador_2[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
         lista[int(coluna) - 1][coords[letra]]= '\u001b[34m▓▓▓\u001b[0m'
 
-    letra_comp = random.choice(letras)
-    coluna_comp = random.choice(numeros)
+    while True:
+        letra_comp = random.choice(letras)
+        coluna_comp = random.choice(numeros)
+        coord_comp=letra_comp+str(coluna_comp)
+        if coord_comp not in lista_posicoes_atacadas_comp:
+            lista_posicoes_atacadas_comp.append(coord_comp)
+            break
 
     if mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]== '\u001b[32m▓▓▓\u001b[0m':
         mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[31m▓▓▓\u001b[0m'
