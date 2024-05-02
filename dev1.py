@@ -200,7 +200,7 @@ def jogador_perde(l):
 def comp_perde(l):
     for i in range(len(l)):
         for k in range(len(l[i])):
-            if l[i][k] == 'N' :return False
+            if l[i][k] == '\u001b[32m▓▓▓\u001b[0m' :return False
     return True
 
 
@@ -241,5 +241,14 @@ while True:
         mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[31m▓▓▓\u001b[0m'
     else:
         mapa_jogador[int(coluna_comp) - 1][coords[letra_comp]]= '\u001b[34m▓▓▓\u001b[0m'
-        
+
     print(f'Jogador   ----->>>>> {letra.upper()}{coluna}       {resultado}')
+
+    if jogador_perde(mapa_jogador):
+        print('Você perdeu!')
+        mostrarMapa(mapa_computador_2, mapa_jogador)
+        break
+    if comp_perde(mapa_computador):
+        print('Você venceu!')
+        mostrarMapa(mapa_computador_2, mapa_jogador)
+        break
